@@ -8,10 +8,19 @@ export const courseApiSlice = apiSlice.injectEndpoints({
             url: `${COURSES_URL}/${courseId}`
         }),
         providesTags: ['Course']
+       }),
+       summarizeFile : builder.mutation({
+         query: ({fileUrl})=>({
+            url: `${COURSES_URL}/summarize`,
+            method: 'POST',
+            body: {fileUrl}
+         })
        })
     })
+
 });
 
 export const {
    useFetchCourseDetailsQuery,
+   useSummarizeFileMutation
 } = courseApiSlice;

@@ -3,11 +3,22 @@ import { FiPlus, FiMinus } from "react-icons/fi";
 import { MdOutlineCircle, MdCheckCircle } from "react-icons/md";
 import { PiPlayCircleThin } from "react-icons/pi";
 import { LiaTrophySolid } from "react-icons/lia";
+import { FaFileAlt } from "react-icons/fa";
+import { useSummarizeFileMutation } from "../redux/api/courseApiSlice.js";
+import Overlay from "./Overlay.jsx";
+
+
+
 
 
 
 const CourseDetails = ({ course }) => {
   const [openModules, setOpenModules] = useState({});
+  const [summarizeFile, {isLoading: summarizing}] = useSummarizeFileMutation();
+  const [summarizationOpen, setSummarizationOpen] = useState(false);
+  const [summary, setSummary] = useState('abcde')
+
+  const [fileName, setFileName] = useState('')
 
   const toggleSection = (index) => {
     setOpenModules((prev) => ({
@@ -15,6 +26,21 @@ const CourseDetails = ({ course }) => {
       [index]: !prev[index], 
     }));
   };
+
+  const handleSummarize=async(e,name, url)=>{
+    e.preventDefault();
+    const fileUrl = url;
+    setFileName(name)
+    try {
+        setSummarizationOpen(true)
+
+        const response = await summarizeFile({fileUrl});
+        setSummary(response.data?.summary);
+    } catch (error) {
+        console.log(error);
+    }
+    
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-sm space-y-2">
@@ -94,11 +120,32 @@ const CourseDetails = ({ course }) => {
                   <LiaTrophySolid className="text-gray-400 text-xl "/> <span>{quiz.title}</span>
                 </li>
               )) }
+              {section.files?.map((file,i)=>(
+                 <li
+                 key={i}
+                 className="cursor-pointer hover:text-gray-500  flex items-center space-x-2 text-gray-400 text-sm">
+                    <FaFileAlt className="text-gray-400 text-xl "/> <a href={file.url}><span className="hover:underline">{file.name}</span> </a>
+                    <button
+                    onClick={(e)=>handleSummarize(e,file.name, file.url)}
+                    className="ml-1 md:ml-4 text-white bg-green-600 hover:bg-green-700 md:text-[15px] text-xs cursor-pointer px-2 py-1 rounded ">Summarize with AI</button>
+               </li>
+              ))}
             </ul>
           </div>
         </div>
       ))}
 
+      
+      <Overlay isOpen={summarizationOpen} onClose={()=>setSummarizationOpen(false)}>
+        <div className="flex w-full justify-center text-xl mb-4">
+                Summary : {fileName}
+        </div>
+        <hr className=" text-gray-300"/>
+        {summarizing? <h1 className="mt-4">Summarizing... Please Wait...</h1>:
+        <div className="w-full px-2 mt-4">{summary}</div>
+        }
+        
+      </Overlay>
       
     </div>
   );
