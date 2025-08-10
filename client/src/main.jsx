@@ -10,7 +10,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter(
   createRoutesFromElements(<Route path='/' element={<App/>}>
-    <Route path='/courses/:courseId' element={<Course/>}/>
+    <Route path='courses/:courseId' element={<Course/>}/>
 
   </Route>)
 )
