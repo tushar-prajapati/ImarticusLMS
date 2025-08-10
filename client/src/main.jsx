@@ -4,7 +4,7 @@ import App from './App.jsx'
 import { Route, RouterProvider, createRoutesFromElements } from 'react-router'
 import { store } from './redux/store.js';
 import { Provider } from 'react-redux';
-import Course from './pages/course/Course.jsx';
+import Course from './pages/Course/Course.jsx';
 import { createBrowserRouter } from 'react-router-dom';
 
 
