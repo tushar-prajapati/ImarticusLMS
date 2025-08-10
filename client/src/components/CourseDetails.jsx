@@ -120,23 +120,22 @@ const CourseDetails = ({ course }) => {
                   <LiaTrophySolid className="text-gray-400 text-xl "/> <span>{quiz.title}</span>
                 </li>
               )) }
-              {section.files?.map((file,i)=>(
+              {/* {section.files?.map(file=>(
                  <li
-                 key={i}
                  className="cursor-pointer hover:text-gray-500  flex items-center space-x-2 text-gray-400 text-sm">
                     <FaFileAlt className="text-gray-400 text-xl "/> <a href={file.url}><span className="hover:underline">{file.name}</span> </a>
                     <button
                     onClick={(e)=>handleSummarize(e,file.name, file.url)}
                     className="ml-1 md:ml-4 text-white bg-green-600 hover:bg-green-700 md:text-[15px] text-xs cursor-pointer px-2 py-1 rounded ">Summarize with AI</button>
                </li>
-              ))}
+              ))} */}
             </ul>
           </div>
         </div>
       ))}
 
       
-      <Overlay isOpen={summarizationOpen} onClose={()=>setSummarizationOpen(false)}>
+      {/* <Overlay isOpen={summarizationOpen} onClose={()=>setSummarizationOpen(false)}>
         <div className="flex w-full justify-center text-xl mb-4">
                 Summary : {fileName}
         </div>
@@ -145,7 +144,7 @@ const CourseDetails = ({ course }) => {
         <div className="w-full px-2 mt-4">{summary}</div>
         }
         
-      </Overlay>
+      </Overlay> */}
       
     </div>
   );
