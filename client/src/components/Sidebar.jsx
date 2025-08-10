@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       )}
 
       <div
-        className={`fixed md:static top-0 left-0 h-full flex flex-col w-80 bg-[#035642] justify-between z-30 transform transition-transform duration-300
+        className={`fixed md:static top-0 left-0 min-h-screen h-full flex flex-col w-80 bg-[#035642] justify-between z-30 transform transition-transform duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
         <div className="w-full">
