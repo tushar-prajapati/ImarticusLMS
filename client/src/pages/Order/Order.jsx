@@ -4,6 +4,7 @@ import Loader from '../../components/Loader.jsx';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { BASE_URL } from '../../redux/constants.js';
 
 
 const apiKey = import.meta.env.VITE_RAZORPAY_API_KEY;
@@ -19,7 +20,7 @@ const Order = () => {
     const handlePayment = async () => {
         console.log(course)
         try {
-            const { data: order } = await axios.post("/api/payment/order", {
+            const { data: order } = await axios.post(`${BASE_URL}/api/payment/order`, {
                 amount: course.amount, 
                 userId: userInfo._id,
                 courseId: course._id
@@ -33,7 +34,7 @@ const Order = () => {
                 description: "test transaction",
                 order_id: order.id,
                 handler: async (response) => {
-                    const { data } = await axios.post("/api/payment/verify", response);
+                    const { data } = await axios.post(`${BASE_URL}/api/payment/verify`, response);
                     if (data.success) {
                         alert("Payment Successful!");
                         navigate(`/courses/${course._id}`);
