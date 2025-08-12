@@ -1,7 +1,7 @@
 import React from "react";
 import { FaUserCircle, FaFileAlt, FaRupeeSign, FaCog, FaSignOutAlt } from "react-icons/fa";
 
-const ProfileOptions = ({isOpen}) => {
+const ProfileOptions = ({isOpen, logoutHandler}) => {
   return (
     isOpen &&
     <div className="bg-white shadow-sm w-48 absolute mt-1 top-16 right-2 z-10 space-y-1 animate-slideDown">
@@ -27,7 +27,7 @@ const ProfileOptions = ({isOpen}) => {
 
       <div className="flex items-center gap-3 cursor-pointer hover:bg-[#F2F6F9] py-2 px-4">
         <FaSignOutAlt className="text-gray-500" />
-        <span className="text-gray-700 font-semibold text-sm hover:text-[#035642]">Logout</span>
+        <span onClick={logoutHandler} className="text-gray-700 font-semibold text-sm hover:text-[#035642]">Logout</span>
       </div>
     </div>
   );

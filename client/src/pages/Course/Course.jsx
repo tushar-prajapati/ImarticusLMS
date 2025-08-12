@@ -11,7 +11,10 @@ import { IoIosArrowForward } from "react-icons/io";
 import CourseDetails from "../../components/CourseDetails.jsx";
 import { useFetchCourseDetailsQuery } from "../../redux/api/courseApiSlice.js";
 import CertificateCard from "../../components/CertificateCard.jsx";
-
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/features/auth/authSlice.js";
+import { useLogoutMutation } from "../../redux/api/userApiSlice.js";
 
 
 
@@ -21,11 +24,28 @@ const Course = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileOptionsOpen, setProfileOptionsOpen] = useState(false);
+  const { userInfo } = useSelector((state) => state.auth);
+  const [logoutApiCall] = useLogoutMutation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
   useEffect(() => {
     if (window.innerWidth < 768) {
       setIsSidebarOpen(false);
     }
   }, []);
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      setDropdownOpen(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     isLoading? <Loader/>: 
@@ -73,11 +93,11 @@ const Course = () => {
             onClick={()=>setProfileOptionsOpen(!profileOptionsOpen)}
             className="cursor-pointer flex items-center gap-4">
               
-              <div className="h-8 w-8 md:h-10 md:w-10 bg-red-500 flex items-center justify-center rounded-full text-white text-md md:text-2xl">T</div>
-              <h1 className="text-gray-500 font-semibold hidden md:flex">Tushar Prajapati</h1>
+              <div className="h-8 w-8 md:h-10 md:w-10 bg-red-500 flex items-center justify-center rounded-full text-white text-md md:text-2xl">{userInfo.fullName[0]}</div>
+              <h1 className="text-gray-500 font-semibold hidden md:flex">{userInfo.fullName}</h1>
               <IoIosArrowDown className="text-lg text-gray-500 hidden md:flex"/>
             </div>
-              <ProfileOptions isOpen={profileOptionsOpen}/>
+              <ProfileOptions logoutHandler={logoutHandler} isOpen={profileOptionsOpen}/>
             </div>
           </div>
         </header>

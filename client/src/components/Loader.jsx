@@ -3,7 +3,7 @@ import logo from '../assets/logo.png'
 
 const Loader = () => {
   return (
-    <div className="relative w-screen h-screen flex items-center justify-center">
+    <div className="relative bg-white w-screen h-screen flex items-center justify-center">
       <div className="absolute overflow-hidden w-32 h-32 border-4 border-white border-t-[#14725c] rounded-full animate-spin"></div>
 
       <img
