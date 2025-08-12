@@ -40,7 +40,6 @@ const Home = () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
-      setDropdownOpen(false);
       navigate("/");
     } catch (error) {
       console.log(error);
