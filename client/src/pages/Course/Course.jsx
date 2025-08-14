@@ -30,6 +30,7 @@ const Course = () => {
   const dispatch = useDispatch();
 
 
+
   useEffect(() => {
     if (window.innerWidth < 768) {
       setIsSidebarOpen(false);
